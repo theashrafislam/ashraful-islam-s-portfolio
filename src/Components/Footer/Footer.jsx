@@ -4,7 +4,7 @@ const Footer = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 className="text-2xl font-bold mb-4">Ashraful Islam</h2>
                 <p className="text-sm mb-4">
-                    Web development is my passion. I strive to create innovative and user-friendly web applications.
+                Ashraful Islam is an Electrical Engineer by training, but his true passion is web development and he specializes in creating innovative web applications.
                 </p>
                 <hr className="border-gray-300 my-4" />
                 <div className="text-sm">

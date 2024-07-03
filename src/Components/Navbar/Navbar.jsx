@@ -109,10 +109,10 @@ const Navbar = () => {
             Projects
           </a>
           <a
-            href="#projects"
+            href="#education"
             className="text-white block px-3 py-2 rounded-md text-base font-medium"
           >
-            Projects
+            Education
           </a>
           <a
             href="#contact"
