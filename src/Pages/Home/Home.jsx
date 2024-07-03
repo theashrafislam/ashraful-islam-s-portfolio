@@ -12,7 +12,45 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import { faDatabase, faCodeBranch } from '@fortawesome/free-solid-svg-icons';
 
+import { useRef } from 'react';
+import emailjs from '@emailjs/browser';
+import toast, { Toaster } from 'react-hot-toast';
+
 const Home = () => {
+    const form = useRef();
+
+    const sendEmail = (e) => {
+      e.preventDefault();
+  
+      emailjs
+        .sendForm('service_qedbzyq', 'template_5qufuzs', form.current, {
+          publicKey: 'tefu8mDcYNcX6Gb6K',
+        })
+        .then(
+          () => {
+            console.log('SUCCESS!');
+            toast.success('Thank you! Your message has been sent.');
+            form.current.reset();
+          },
+          (error) => {
+            console.log('FAILED...', error.text);
+            toast.error('Oops! Something went wrong. Please try again.')
+          },
+        );
+    };
+
+    const handleDownloadResume = () => {
+        const resumeUrl = './Full_Stack_Web_Developer_Resume_of_Ashraful_Islam.pdf';
+    
+        const link = document.createElement('a');
+        link.href = resumeUrl;
+        link.target = '_blank'; // Open in a new tab
+        link.setAttribute('download', 'Full_Stack_Web_Developer_Resume_of_Ashraful_Islam.pdf');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+
     return (
         <div className="bg-gray-100 text-gray-900">
             {/* Hero Section */}
@@ -20,7 +58,7 @@ const Home = () => {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-6 flex-col lg:flex-row items-center">
                     <div className="lg:w-1/2 mb-8 lg:mb-0">
                         <img
-                            src="./ashraful-islam.jpg" // Update this path to your image
+                            src="./ashraful-islam.jpg"
                             alt="Ashraful Islam"
                             className="w-full h-auto rounded-lg shadow-lg"
                         />
@@ -32,7 +70,7 @@ const Home = () => {
                             Ashraful Islam is a skilled full-stack developer known for developing robust and efficient applications. Specializing in front-end and back-end development, he is skilled in JavaScript and has a wide range of skills with extensive experience. Ashraful's deep passion and unwavering commitment to web development, accentuated by his in-depth understanding and expertise of technology, has solidified his reputation in the industry.
                         </p>
                         <a
-                            href="/path/to/your/resume.pdf" // Update this path to your resume
+                            onClick={handleDownloadResume}
                             className="inline-block px-6 py-3 bg-teal-500 text-white rounded-md text-lg hover:bg-teal-600"
                             download
                         >
@@ -221,35 +259,45 @@ const Home = () => {
 
             {/* Contact Section */}
             <section id='contact' className="bg-gray-900 text-white py-20">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-3xl sm:text-4xl font-bold mb-8">Contact Me</h2>
-                    <div className="flex justify-center space-x-4">
-                        <a
-                            href="https://www.linkedin.com/in/theashrafislam/"
-                            target='_black'
-                            className="text-gray-400 hover:text-white transition duration-300 ease-in-out"
-                        >
-                            <FaLinkedin size={24} />
-                        </a>
-                        <a
-                            href="https://github.com/theashrafislam"
-                            target='_black'
-                            className="text-gray-400 hover:text-white transition duration-300 ease-in-out"
-                        >
-                            <FaGithub size={24} />
-                        </a>
-                        <a
-                            href="https://www.facebook.com/theashrafislam"
-                            target='_black'
-                            className="text-gray-400 hover:text-white transition duration-300 ease-in-out"
-                        >
-                            <FaFacebook size={24} />
-                        </a>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row">
+                    <div className="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <h2 className="text-3xl sm:text-4xl font-bold mb-4">Contact Information</h2>
+                        <p>Email: <a href="theashrafislam@gmail.com" className="text-teal-400">theashrafislam@gmail.com</a></p>
+                        <p>Phone: <a href="tel:+880 1639568198" className="text-teal-400">+880 1639568198</a></p>
+                        <div className="mt-4 flex space-x-4">
+                            <a href="https://www.linkedin.com/in/theashrafislam/" target="_blank" rel="noopener noreferrer" className="text-teal-400 text-2xl">
+                                <FaLinkedin />
+                            </a>
+                            <a href="https://www.facebook.com/theashrafislam" target="_blank" rel="noopener noreferrer" className="text-teal-400 text-2xl">
+                                <FaFacebook />
+                            </a>
+                            <a href="https://github.com/theashrafislam/" target="_blank" rel="noopener noreferrer" className="text-teal-400 text-2xl">
+                                <FaGithub />
+                            </a>
+                        </div>
+                        <p className="mt-8">Do you have a project in mind or questions about my work? Let's talk about your project! Contact me and I'll be happy to discuss how we can bring your ideas to life.</p>
                     </div>
-                    <p className="text-sm mt-4">Email: theashrafislam@gmail.com</p>
-                    <p className="text-sm">Phone: +880 1639568198</p>
+                    <div className="md:w-1/2">
+                        <h2 className="text-3xl sm:text-4xl font-bold mb-4">Get In Touch</h2>
+                        <form ref={form} onSubmit={sendEmail} className="bg-gray-800 p-8 rounded-lg shadow-md">
+                            <div className="mb-4">
+                                <label htmlFor="name" className="block text-sm font-medium text-gray-300">Name</label>
+                                <input type="text" id="name" name="from_name" className="mt-1 p-2 w-full bg-gray-700 text-white rounded-md" required />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-300">Email</label>
+                                <input type="email" id="email" name="form_email" className="mt-1 p-2 w-full bg-gray-700 text-white rounded-md" required />
+                            </div>
+                            <div className="mb-4">
+                                <label htmlFor="message" className="block text-sm font-medium text-gray-300">Message</label>
+                                <textarea id="message" name="message" className="mt-1 p-2 w-full bg-gray-700 text-white rounded-md" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" className="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-md">Send Message</button>
+                        </form>
+                    </div>
                 </div>
             </section>
+            <Toaster />
         </div>
     );
 };
